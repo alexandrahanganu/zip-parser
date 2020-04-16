@@ -1,62 +1,113 @@
 package com.zip.parser;
 
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
+import java.io.RandomAccessFile;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
 
 public class DataFromPropertiesFile {
 	
-	//we use the static modifier so we can use these values along the way in our different classes
-	//that extend DataFromPropertiesFile such as FilesFromFolder or AllowedFormats or FolderTemplateName
+	private static String parserSourcePath = "parser.source.path";
+	private static String parserDestinationPath = "parser.destination.path";
+	private static String parserAllowedFormat = "parser.allowed.format";
+	private static String parserZipFolderTemplateName = "parser.zip.folder.template.name";
 	
-	public static String pathIn = "";
-	public static String pathOut = "";
-	public static String allowedFormats = "";
-	public static String folderTemplateName = "";
-
-	public DataFromPropertiesFile(){
+	private static String parserSourcePathValue = "";
+	private static String parserDestinationPathValue = "";
+	private static String parserAllowedFormatValue = "";
+	private static String parserZipFolderTemplateNameValue = "";
+	
+	private static Properties parserProperties = new Properties();
+	
+	static {
 		
-		String file = "properties/parser.properties";
-
 		try {
-
-		    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-		    String line;
-		    
-		    
-	    	int lineCount = 0;
-
-		    while ((line = br.readLine()) != null) {
-		    	
-		    	lineCount++;
-		    	
-		    	int beginning = line.indexOf("=") + 1;	//we know the exact configuration of our properties file
-		    	
-		    	if(lineCount == 1) {
-		    		pathIn = line.substring(beginning);
-		    	}
-		    	if(lineCount == 2) {
-		    		pathOut = line.substring(beginning);
-		    	}
-		    	if(lineCount == 3) {
-		    		allowedFormats = line.substring(beginning);
-		    	}
-		    	if(lineCount == 4) {
-		    		folderTemplateName = line.substring(beginning);
-		    	}
-
-		    }
-		    
-		    br.close();
-
+			InputStream fileParserProperties = new FileInputStream("properties/parser.properties");
+			parserProperties.load(fileParserProperties);
 		} catch (IOException e) {
-		    System.out.println("ERROR: unable to read file " + file);
-		    e.printStackTrace();   
+			
+        	System.out.println("WARNING: IOException");
+			e.printStackTrace();
 		}
 		
-		//System.out.println(pathIn + " " + pathOut + " " + allowedFormats + " " + folderTemplateName);
+		
+		parserSourcePathValue = parserProperties.getProperty(parserSourcePath);
+        parserDestinationPathValue = parserProperties.getProperty(parserDestinationPath);
+        parserAllowedFormatValue = parserProperties.getProperty(parserAllowedFormat);
+        parserZipFolderTemplateNameValue = parserProperties.getProperty(parserZipFolderTemplateName);
+	}
+	
+	
+	public static String getParserSourcePathValue() {
+		
+		return parserSourcePathValue;
+		
+	}
+	
+	public static String getParserDestinationPathValue() {
+			
+			return parserDestinationPathValue;
+			
+	}
+	
+	public static String getParserAllowedFormatValue() {
+		
+		return parserAllowedFormatValue;
+		
+	}
+	
+	public static String getParserZipFolderTemplateNameValue() {
+		
+		return parserZipFolderTemplateNameValue;
+		
+	}
+	
+	public static List<String> getParserAllowedFormatValueAsList(){
+		
+		List<String> allowedFormatList = Arrays.asList(getParserAllowedFormatValue().split(","));
+		
+		return allowedFormatList;
+	}
+	
+	public static void setParserSourcePathValue(String newParserSourcePathValue) {
+		parserSourcePathValue = newParserSourcePathValue;
+		parserProperties.replace(parserSourcePath, parserSourcePathValue);
+	}
+	
+	public static void setParserDestinationPathValue(String newParserDestinationPathValue) {
+		parserDestinationPathValue = newParserDestinationPathValue;
+		parserProperties.replace(parserDestinationPath, parserDestinationPathValue);
+	}
+	
+	public static void setParserAllowedFormatValue(String newParserAllowedFormatValue) {
+		parserAllowedFormatValue = newParserAllowedFormatValue;
+		parserProperties.replace(parserAllowedFormat, parserAllowedFormatValue);
+	}
+	
+	public static void setParserZipFolderTemplateNameValue(String newParserZipFolderTemplateNameValue) {
+		parserZipFolderTemplateNameValue = newParserZipFolderTemplateNameValue;
+		parserProperties.replace(parserZipFolderTemplateName, parserZipFolderTemplateNameValue);
+		
+	}
+	
+	public static void updatePropertiesFile() throws IOException {
+		RandomAccessFile fileProperties = new RandomAccessFile("properties/parser.properties", "rwd");
+		fileProperties.setLength(0);
+		
+		updateInformation(fileProperties);
+		
+		fileProperties.close();
+	}
+	
+	public static void updateInformation(RandomAccessFile fileProperties) throws IOException {
+		
+		fileProperties.writeBytes(parserSourcePath + " = " + getParserSourcePathValue() + '\n');
+		fileProperties.writeBytes(parserDestinationPath + " = " + getParserDestinationPathValue() + '\n');
+		fileProperties.writeBytes(parserAllowedFormat + " = " + getParserAllowedFormatValue() + '\n');
+		fileProperties.writeBytes(parserZipFolderTemplateName + " = " + getParserZipFolderTemplateNameValue() + '\n');
+		
 	}
 }
-
-

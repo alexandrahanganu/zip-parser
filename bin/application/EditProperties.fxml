@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.EditPropertiesController">
+   <children>
+      <Pane layoutX="14.0" layoutY="14.0" prefHeight="70.0" prefWidth="610.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="6.0" prefHeight="100.0" prefWidth="386.0" text="Edit properties" textFill="#156d82" underline="true">
+               <font>
+                  <Font name="Calibri Bold" size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="109.0" layoutY="439.0" prefHeight="46.0" prefWidth="386.0" />
+      <Button fx:id="saveButton" layoutX="443.0" layoutY="414.0" mnemonicParsing="false" onAction="#saveButtonAction" text="Save" />
+      <Button fx:id="cancelButton" layoutX="520.0" layoutY="414.0" mnemonicParsing="false" onAction="#cancelButtonAction" text="Cancel" />
+      <GridPane gridLinesVisible="true" layoutX="14.0" layoutY="180.0" prefHeight="120.0" prefWidth="610.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="186.0" minWidth="10.0" prefWidth="173.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="0.0" prefWidth="4.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="433.0" minWidth="10.0" prefWidth="433.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="173.0" text="Source Path: " textFill="#156d82">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="175.0" text="Destination Path: " textFill="#156d82" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="177.0" text="Allowed Formats: " textFill="#156d82" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="178.0" text="ZIP Folder Template Name: " textFill="#156d82" GridPane.rowIndex="3">
+            <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField fx:id="sourcePathEdit" prefHeight="23.0" prefWidth="417.0" GridPane.columnIndex="2" />
+            <TextField fx:id="destPathEdit" prefHeight="25.0" prefWidth="325.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="allowedEdit" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <TextField fx:id="nameTempEdit" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
